@@ -1,20 +1,8 @@
 node {
-
-    stage('Build') {
-        sh 'echo "Building the project..."'
-        // Add your build commands here
+    stage('Checkout') {
+        checkout scm
     }
 
-    stage('Test') {
-        sh 'echo "Running tests..."'
-        // Add your test commands here
-    }
-
-    stage('Deploy') {
-        sh 'echo "Deploying the project..."'
-        // Add your deploy commands here
-    }
-    
     stage('Parallel Build & Test') {
         parallel(
             'Build': {
@@ -33,5 +21,13 @@ node {
                 }
             }
         )
+    }
+
+    stage('Deploy') {
+        if (env.BRANCH_NAME == 'trunk') {
+            stage('Production Deploy') {
+                sh './deploy-prod.sh'
+            }
+        }
     }
 }
