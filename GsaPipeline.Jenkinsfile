@@ -18,10 +18,7 @@ node {
     }
 
     stage('Deploy') {
-        if (env.BRANCH_NAME == 'trunk') {
-            stage('Production Deploy') {
-                sh 'echo "Deploying to production..."'
-            }
-        }
+        sh 'echo "Deploying to production..."'
+
     }
 }
