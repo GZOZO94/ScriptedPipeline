@@ -15,7 +15,7 @@ node {
         parallel(
             'Build': {
                 node {
-                    sh 'echo "Building the project..." ${parameters.VERSION}'
+                    sh 'echo "Building the project..." ${params.VERSION}'
                 }
                    
             },
