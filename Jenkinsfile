@@ -1,3 +1,11 @@
+properties([
+    parameters([
+        string(name: 'VERSION', defaultValue: '1.0.0', description: 'Build version'),
+        booleanParam(name: 'DEPLOY', defaultValue: false, description: 'Deploy?'),
+        choice(name: 'ENV', choices: ['dev', 'test', 'prod'], description: 'Environment')
+    ])
+])
+
 node {
     stage('Checkout') {
         checkout scm
@@ -7,7 +15,7 @@ node {
         parallel(
             'Build': {
                 node {
-                    sh 'echo "Building the project..."'
+                    sh 'echo "Building the project..." ${parameters.VERSION}'
                 }
                    
             },
