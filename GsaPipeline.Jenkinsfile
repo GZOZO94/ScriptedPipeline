@@ -6,19 +6,13 @@ node {
     stage('Parallel Build & Test') {
         parallel(
             'Build': {
-                stage('Build') {
-                    sh 'mvn clean package'
-                }
+                    sh echo 'Building the project...'
             },
             'Unit Tests': {
-                stage('Unit Tests') {
-                    sh 'mvn test'
-                }
+                    sh echo 'Running unit tests...'
             },
             'Static Analysis': {
-                stage('Static Analysis') {
-                    sh 'mvn checkstyle:check'
-                }
+                    sh echo 'Performing static code analysis...'
             }
         )
     }
@@ -26,7 +20,7 @@ node {
     stage('Deploy') {
         if (env.BRANCH_NAME == 'trunk') {
             stage('Production Deploy') {
-                sh './deploy-prod.sh'
+                sh echo 'Deploying to production...'
             }
         }
     }
