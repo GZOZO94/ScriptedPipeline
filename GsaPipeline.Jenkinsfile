@@ -14,16 +14,24 @@ node {
         sh 'echo "Deploying the project..."'
         // Add your deploy commands here
     }
-    stage('Build & Test') {
-        parallel {
-            stage('Static Analysis') {
-                sh 'echo "Running static analysis..."'
-                // Add your static analysis commands here
+    
+    stage('Parallel Build & Test') {
+        parallel(
+            'Build': {
+                stage('Build') {
+                    sh 'mvn clean package'
+                }
+            },
+            'Unit Tests': {
+                stage('Unit Tests') {
+                    sh 'mvn test'
+                }
+            },
+            'Static Analysis': {
+                stage('Static Analysis') {
+                    sh 'mvn checkstyle:check'
+                }
             }
-            stage('Code Coverage') {
-                sh 'echo "Calculating code coverage..."'
-                // Add your code coverage commands here
-            }
-        }
+        )
     }
 }
