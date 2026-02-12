@@ -27,4 +27,9 @@ node {
     stage('Deploy') {
         sh 'echo "Deploying to production..."'
     }
+
+    stage('Cleanup') {
+        sh 'echo "Cleaning up workspace..."'
+        deleteDir()
+    }
 }
