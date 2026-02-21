@@ -13,6 +13,9 @@ node {
 
     stage('Parallel Build & Test') {
         parallel(
+
+            parallel failFast: true,
+            
             'Build': {
                 node {
                     sh "echo  ${params.VERSION}"
