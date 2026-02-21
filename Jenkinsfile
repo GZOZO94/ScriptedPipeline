@@ -12,10 +12,9 @@ node {
     }
 
     stage('Parallel Build & Test') {
-        parallel(
 
             parallel failFast: true,
-            
+
             'Build': {
                 node {
                     sh "echo  ${params.VERSION}"
@@ -32,7 +31,6 @@ node {
                     sh 'echo "Performing static code analysis..."'
                 }
             }
-        )
     }
 
     stage('Deploy') {
